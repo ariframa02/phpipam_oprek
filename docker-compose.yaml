@@ -8,12 +8,12 @@ services:
     restart: unless-stopped
     ports: 
         - 80:80
-    environment:
-      - MYSQL_DB_HOSTNAME=oprek_database
-      - MYSQL_DB_USERNAME=phpIPAM
-      - MYSQL_DB_PASSWORD=12345678
-      - MYSQL_DB_NAME=phpIPAM
-      - MYSQL_DB_PORT=3306
+    # environment:
+      # - MYSQL_DB_HOSTNAME=oprek_database
+      # - MYSQL_DB_USERNAME=phpIPAM
+      # - MYSQL_DB_PASSWORD=12345678
+      # - MYSQL_DB_NAME=phpIPAM
+      # - MYSQL_DB_PORT=3306
     networks:
       - oprek_net
 
@@ -25,7 +25,7 @@ services:
     ports:
       - 6868:80
     environment:
-      - PMA_HOST=labs_database
+      - PMA_HOST=oprek_maria_db
     networks:
       - oprek_net
 

@@ -1,5 +1,5 @@
 FROM ubuntu:latest
-MAINTAINER Arif
+MAINTAINER kulioprek.my.id
 
 ENV WEB_REPO /usr/share/nginx/html/phpIPAM
 ENV TZ="Asia/Jakarta"
@@ -14,12 +14,9 @@ RUN apt-get install -y tzdata && \
     dpkg-reconfigure -f noninteractive tzdata
 
 # Install nginx
-RUN apt-get install -y nginx  
-RUN rm -rf /etc/nginx/sites-enabled/default
-COPY ./config/nginx/phpIPAM /etc/nginx/sites-enabled
-
-#Menambahkan phpinfo untuk pengecekan versi
-COPY ./config/nginx/info.php /usr/share/nginx/html/
+RUN apt-get install -y nginx
+COPY ./config/nginx/phpipam.conf /etc/nginx/conf.d/
+RUN rm -rf /etc/nginx/sites-enabled/default 
 RUN nginx -t
 
 #Install php versi 7.4
@@ -37,25 +34,14 @@ RUN php -v
 #Install phpIPAM
 RUN apt-get install -y git
 RUN git clone https://github.com/phpipam/phpipam.git /usr/share/nginx/html/phpIPAM
-# COPY ./config/mariadb/config.php /usr/share/nginx/html/phpIPAM/
-# RUN chown www-data /usr/share/nginx/html/phpIPAM/app/admin/import-export/upload && \
-#    chown www-data /usr/share/nginx/html/phpIPAM/app/subnets/import-subnet/upload && \
-#    chown www-data /usr/share/nginx/html/phpIPAM/css/images/logo
-ENV PHPIPAM_BASE /
-RUN cp ${WEB_REPO}/config.dist.php ${WEB_REPO}/config.php && \
+COPY ./config/mariadb/config.php /usr/share/nginx/html/phpIPAM/
+RUN chown www-data /usr/share/nginx/html/phpIPAM && \
     chown www-data /usr/share/nginx/html/phpIPAM/app/admin/import-export/upload && \
     chown www-data /usr/share/nginx/html/phpIPAM/app/subnets/import-subnet/upload && \
-    chown www-data /usr/share/nginx/html/phpIPAM/css/images/logo && \
-    echo "\$db['webhost'] = '%';" >> ${WEB_REPO}/config.php && \
-    sed -i -e "s/\['host'\] = '127.0.0.1'/\['host'\] = getenv(\"MYSQL_ENV_MYSQL_HOST\") ?: \"oprek_maria_db\"/" \
-    -e "s/\['user'\] = 'phpipam'/\['user'\] = getenv(\"MYSQL_ENV_MYSQL_USER\") ?: \"root\"/" \
-    -e "s/\['name'\] = 'phpipam'/\['name'\] = getenv(\"MYSQL_ENV_MYSQL_DB\") ?: \"phpipam\"/" \
-    -e "s/\['pass'\] = 'phpipamadmin'/\['pass'\] = getenv(\"MYSQL_ENV_MYSQL_ROOT_PASSWORD\")/" \
-    -e "s/\['port'\] = 3306;/\['port'\] = 3306;\n\n\$password_file = getenv(\"MYSQL_ENV_MYSQL_PASSWORD_FILE\");\nif(file_exists(\$password_file))\n\$db\['pass'\] = preg_replace(\"\/\\\\s+\/\", \"\", file_get_contents(\$password_file));/" \
-    -e "s/define('BASE', \"\/\")/define('BASE', getenv(\"PHPIPAM_BASE\"))/" \
-    -e "s/\$gmaps_api_key.*/\$gmaps_api_key = getenv(\"GMAPS_API_KEY\") ?: \"\";/" \
-    -e "s/\$gmaps_api_geocode_key.*/\$gmaps_api_geocode_key = getenv(\"GMAPS_API_GEOCODE_KEY\") ?: \"\";/" \
-    ${WEB_REPO}/config.php
+    chown www-data /usr/share/nginx/html/phpIPAM/css/images/logo
+
+#Menambahkan phpinfo untuk pengecekan versi
+COPY ./config/nginx/info.php /usr/share/nginx/html/phpIPAM
 
 #Membuka port http
 EXPOSE 80

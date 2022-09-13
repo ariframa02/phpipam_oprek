@@ -3,7 +3,7 @@ services:
 
   phpIPAM:
     image: phpipamoprek:latest
-    container_name: labs_phpIPAMLAbs
+    container_name: labs_phpipam
     hostname: phpIPAMLabs
     restart: unless-stopped
     ports: 

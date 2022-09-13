@@ -1,0 +1,69 @@
+version: '3.7'
+services:
+
+  phpIPAM:
+    image: phpipamlabs:latest
+    container_name: labs_phpIPAMLAbs
+    hostname: phpIPAMLabs
+    restart: unless-stopped
+    ports: 
+        - 80:80
+    environment:
+      - MYSQL_DB_HOSTNAME=labs_database
+      - MYSQL_DB_USERNAME=phpIPAM
+      - MYSQL_DB_PASSWORD=12345678
+      - MYSQL_DB_NAME=phpIPAM
+      - MYSQL_DB_PORT=3306
+    networks:
+      - labs_net
+
+  myadmin:
+    image: phpmyadmin:latest
+    container_name: labs_myadmin
+    hostname: myadmin
+    restart: unless-stopped
+    ports:
+      - 6868:80
+    environment:
+      - PMA_HOST=labs_database
+    networks:
+      - labs_net
+
+  db:
+    image: "mariadb:10.3"
+    container_name: labs_database
+    hostname: db
+    restart: unless-stopped
+    networks:
+      - labs_net
+    command:
+      - mysqld
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --max_connections=200
+      - --max_heap_table_size=256M
+      - --max_allowed_packet=32M
+      - --tmp_table_size=256M
+      - --join_buffer_size=512M
+      - --innodb_buffer_pool_size=4G
+      - --innodb_doublewrite=OFF
+      - --innodb_flush_log_at_timeout=3
+      - --innodb_read_io_threads=32
+      - --innodb_write_io_threads=16
+      - --innodb_buffer_pool_instances=40
+      - --innodb_file_format=Barracuda
+      - --innodb_large_prefix=1
+      - --innodb_io_capacity=5000
+      - --innodb_io_capacity_max=10000
+    environment:
+      - MYSQL_ROOT_PASSWORD=L@b5Opr3kD8
+      - TZ=Asia/Jakarta
+    volumes:
+      - labs-db:/var/lib/mysql
+
+volumes:
+  labs-db:
+
+networks:
+  labs_net:
+    external: true

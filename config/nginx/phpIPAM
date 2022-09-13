@@ -1,0 +1,31 @@
+server {
+    listen 80;
+    root /usr/share/nginx/html/phpIPAM;
+    index index.php index.html index.htm;
+
+    location / {
+      try_files $uri $uri/ /index.php?$args;
+    }
+
+    # phpipam
+    location /phpIPAM/ {
+        try_files $uri $uri/ /phpipam/index.php;
+        index index.php;
+    }
+    # phpipam - api
+    location /phpIPAM/api/ {
+        try_files $uri $uri/ /phpipam/api/index.php;
+    }
+
+    location ~ \.php$ {
+      try_files $fastcgi_script_name =404;
+      include fastcgi_params;
+      fastcgi_pass    unix:/run/php/php7.4-fpm.sock;
+      fastcgi_index   index.php;
+      fastcgi_param DOCUMENT_ROOT    $realpath_root;
+      fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name; 
+    }
+
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+}

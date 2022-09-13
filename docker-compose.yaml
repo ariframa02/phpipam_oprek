@@ -2,7 +2,7 @@ version: '3.7'
 services:
 
   phpIPAM:
-    image: phpipamlabs:latest
+    image: phpipamoprek:latest
     container_name: labs_phpIPAMLAbs
     hostname: phpIPAMLabs
     restart: unless-stopped

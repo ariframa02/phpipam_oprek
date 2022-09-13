@@ -3,23 +3,23 @@ services:
 
   phpIPAM:
     image: phpipamoprek:latest
-    container_name: labs_phpipam
+    container_name: oprek_phpipam
     hostname: phpIPAMLabs
     restart: unless-stopped
     ports: 
         - 80:80
     environment:
-      - MYSQL_DB_HOSTNAME=labs_database
+      - MYSQL_DB_HOSTNAME=oprek_database
       - MYSQL_DB_USERNAME=phpIPAM
       - MYSQL_DB_PASSWORD=12345678
       - MYSQL_DB_NAME=phpIPAM
       - MYSQL_DB_PORT=3306
     networks:
-      - labs_net
+      - oprek_net
 
   myadmin:
     image: phpmyadmin:latest
-    container_name: labs_myadmin
+    container_name: oprek_myadmin
     hostname: myadmin
     restart: unless-stopped
     ports:
@@ -27,7 +27,7 @@ services:
     environment:
       - PMA_HOST=labs_database
     networks:
-      - labs_net
+      - oprek_net
 
   db:
     image: "mariadb:10.3"
@@ -35,7 +35,7 @@ services:
     hostname: db
     restart: unless-stopped
     networks:
-      - labs_net
+      - oprek_net
     command:
       - mysqld
       - --character-set-server=utf8mb4
@@ -59,11 +59,11 @@ services:
       - MYSQL_ROOT_PASSWORD=L@b5Opr3kD8
       - TZ=Asia/Jakarta
     volumes:
-      - labs-db:/var/lib/mysql
+      - oprek-db:/var/lib/mysql
 
 volumes:
-  labs-db:
+  oprek-db:
 
 networks:
-  labs_net:
+  oprek_net:
     external: true

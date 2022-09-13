@@ -31,7 +31,7 @@ services:
 
   db:
     image: "mariadb:10.3"
-    container_name: labs_database
+    container_name: oprek_maria_db
     hostname: db
     restart: unless-stopped
     networks:

@@ -12,14 +12,14 @@
 /**
 * database connection details
 ******************************/
-// $db['host'] = 'oprek_maria_db';
-// $db['user'] = 'root';
-// $db['pass'] = 'L@b5Opr3kD8';
-// $db['name'] = 'phpipam';
-// $db['port'] = 3306;
-// $password_file = getenv("MYSQL_ENV_MYSQL_PASSWORD_FILE");
-// if(file_exists($password_file))
-// $db['pass'] = preg_replace("/\s+/", "", file_get_contents($password_file));
+$db['host'] = 'oprek_maria_db';
+$db['user'] = 'root';
+$db['pass'] = 'L@b5Opr3kD8';
+$db['name'] = 'phpipam';
+$db['port'] = 3306;
+$password_file = getenv("MYSQL_ENV_MYSQL_PASSWORD_FILE");
+if(file_exists($password_file))
+$db['pass'] = preg_replace("/\s+/", "", file_get_contents($password_file));
 
 /**
  * Database webhost settings

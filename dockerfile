@@ -1,5 +1,5 @@
 FROM ubuntu:latest
-MAINTAINER kulioprek.my.id
+MAINTAINER kulioprek
 
 ENV WEB_REPO /usr/share/nginx/html/phpIPAM
 ENV TZ="Asia/Jakarta"
@@ -15,11 +15,11 @@ RUN apt-get install -y tzdata && \
 
 # Install nginx
 RUN apt-get install -y nginx
-COPY ./config/nginx/phpipam.conf /etc/nginx/conf.d/
+COPY ./config/nginx/phpipam.conf /etc/nginx/conf.d/phpipam.conf
 RUN rm -rf /etc/nginx/sites-enabled/default 
 RUN nginx -t
 
-#Install php versi 7.4
+#Install php versi 7.4ping
 RUN apt-get -y install software-properties-common && \
     add-apt-repository ppa:ondrej/php
 
@@ -35,13 +35,13 @@ RUN php -v
 RUN apt-get install -y git
 RUN git clone https://github.com/phpipam/phpipam.git /usr/share/nginx/html/phpIPAM
 COPY ./config/mariadb/config.php /usr/share/nginx/html/phpIPAM/
-RUN chown www-data /usr/share/nginx/html/phpIPAM && \
+RUN chown www-data -R /usr/share/nginx/html/phpIPAM && \
     chown www-data /usr/share/nginx/html/phpIPAM/app/admin/import-export/upload && \
     chown www-data /usr/share/nginx/html/phpIPAM/app/subnets/import-subnet/upload && \
     chown www-data /usr/share/nginx/html/phpIPAM/css/images/logo
 
 #Menambahkan phpinfo untuk pengecekan versi
-COPY ./config/nginx/info.php /usr/share/nginx/html/phpIPAM
+COPY ./config/nginx/info.php /usr/share/nginx/html/phpIPAM/
 
 #Membuka port http
 EXPOSE 80

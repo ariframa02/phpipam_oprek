@@ -38,7 +38,8 @@ COPY ./config/mariadb/config.php /usr/share/nginx/html/phpIPAM/
 RUN chown www-data -R /usr/share/nginx/html/phpIPAM && \
     chown www-data /usr/share/nginx/html/phpIPAM/app/admin/import-export/upload && \
     chown www-data /usr/share/nginx/html/phpIPAM/app/subnets/import-subnet/upload && \
-    chown www-data /usr/share/nginx/html/phpIPAM/css/images/logo
+    chown www-data /usr/share/nginx/html/phpIPAM/css/images/logo && \
+    sed -i 's/\;clear_env = no/clear_env = no/' /etc/php/7.4/fpm/pool.d/www.conf
 
 #Menambahkan phpinfo untuk pengecekan versi
 COPY ./config/nginx/info.php /usr/share/nginx/html/phpIPAM/

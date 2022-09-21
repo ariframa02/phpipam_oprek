@@ -3,23 +3,23 @@
 /**
  * database connection details
  ******************************/
-// $db['host'] = getenv('MYSQL_DB_HOSTNAME', true) ?: getenv('MYSQL_DB_HOSTNAME');
-// $db['user'] = getenv('MYSQL_DB_USERNAME', true) ?: getenv('MYSQL_DB_USERNAME');
-// $db['pass'] = getenv('MYSQL_DB_PASSWORD', true) ?: getenv('MYSQL_DB_PASSWORD');
-// $db['name'] = getenv('MYSQL_DB_NAME', true) ?: getenv('MYSQL_DB_NAME');
-// $db['port'] = getenv('MYSQL_DB_PORT', true) ?: get_defined_vars('MYSQL_DB_PORT');
+$db['host'] = getenv('MYSQL_DB_HOSTNAME', true) ?: getenv('MYSQL_DB_HOSTNAME');
+$db['user'] = getenv('MYSQL_DB_USERNAME', true) ?: getenv('MYSQL_DB_USERNAME');
+$db['pass'] = getenv('MYSQL_DB_PASSWORD', true) ?: getenv('MYSQL_DB_PASSWORD');
+$db['name'] = getenv('MYSQL_DB_NAME', true) ?: getenv('MYSQL_DB_NAME');
+$db['port'] = getenv('MYSQL_DB_PORT', true) ?: get_defined_vars('MYSQL_DB_PORT');
 
 /**
 * database connection details
 ******************************/
-$db['host'] = 'oprek_maria_db';
-$db['user'] = 'root';
-$db['pass'] = 'L@b5Opr3kD8';
-$db['name'] = 'phpipam';
-$db['port'] = 3306;
-$password_file = getenv("MYSQL_ENV_MYSQL_PASSWORD_FILE");
-if(file_exists($password_file))
-$db['pass'] = preg_replace("/\s+/", "", file_get_contents($password_file));
+// $db['host'] = 'oprek_maria_db';
+// $db['user'] = 'root';
+// $db['pass'] = 'L@b5Opr3kD8';
+// $db['name'] = 'phpipam';
+// $db['port'] = 3306;
+// $password_file = getenv("MYSQL_ENV_MYSQL_PASSWORD_FILE");
+// if(file_exists($password_file))
+// $db['pass'] = preg_replace("/\s+/", "", file_get_contents($password_file));
 
 /**
  * Database webhost settings

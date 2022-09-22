@@ -1,8 +1,9 @@
 version: '3.7'
 services:
 
-  phpIPAM:
-    image: phpipamoprek:latest
+  ipam:
+    # image: phpipamoprek:latest
+    build: .
     container_name: oprek_phpipam
     hostname: phpIPAMLabs
     restart: unless-stopped
@@ -10,12 +11,14 @@ services:
         - 80:80
     environment:
       - MYSQL_DB_HOSTNAME=oprek_maria_db
-      - MYSQL_DB_USERNAME=root
-      - MYSQL_DB_PASSWORD=L@b5Opr3kD8
-      - MYSQL_DB_NAME=phpIPAM
+      - MYSQL_DB_USERNAME=
+      - MYSQL_DB_PASSWORD=
+      - MYSQL_DB_NAME=
       - MYSQL_DB_PORT=3306
     networks:
       - oprek_net
+    volumes:
+      - ${PWD}/logs/nginx:/var/log/nginx/
 
   myadmin:
     image: phpmyadmin:latest
@@ -56,13 +59,11 @@ services:
       - --innodb_io_capacity=5000
       - --innodb_io_capacity_max=10000
     environment:
-      - MYSQL_ROOT_PASSWORD=L@b5Opr3kD8
+      - MYSQL_ROOT_PASSWORD=
       - TZ=Asia/Jakarta
     volumes:
-      - oprek-db:/var/lib/mysql
-
-volumes:
-  oprek-db:
+      - ${PWD}/config/mariadb:/var/lib/mysql
+      - ${PWD}/logs/mariadb:/var/logs/mariadb
 
 networks:
   oprek_net:

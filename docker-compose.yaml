@@ -11,9 +11,9 @@ services:
         - 80:80
     environment:
       - MYSQL_DB_HOSTNAME=oprek_maria_db
-      - MYSQL_DB_USERNAME=root
-      - MYSQL_DB_PASSWORD=testing
-      - MYSQL_DB_NAME=phpIPAM
+      - MYSQL_DB_USERNAME=
+      - MYSQL_DB_PASSWORD=
+      - MYSQL_DB_NAME=
       - MYSQL_DB_PORT=3306
     networks:
       - oprek_net
@@ -59,7 +59,7 @@ services:
       - --innodb_io_capacity=5000
       - --innodb_io_capacity_max=10000
     environment:
-      - MYSQL_ROOT_PASSWORD=testing
+      - MYSQL_ROOT_PASSWORD=
       - TZ=Asia/Jakarta
     volumes:
       - ${PWD}/config/mariadb:/var/lib/mysql

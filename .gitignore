@@ -1,0 +1,12 @@
+#not commit logs mariadb and commit dummy.txt
+logs/mariadb/*
+!logs/maridb/dummy.txt
+
+#not commit logs nginx and commit dummy.txt
+logs/nginx/*
+!logs/nginx/dummy.txt
+
+#not push config mariadb and push dummy.txt
+config/mariadb/*
+!config/mariadb/info.php
+!config/mariadb/phpipam.conf
